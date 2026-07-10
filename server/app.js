@@ -4,6 +4,8 @@ import errorMiddleware from "./middlewares/error.js"
 import { clerkMiddleware } from '@clerk/express'
 import clerkWebhooks from "./controllers/clerkWebhooks.js"
 import userRouter from "./routes/userRoutes.js"
+import hotelRouter from "./routes/hotelRoutes.js"
+import roomRouter from "./routes/roomRoutes.js"
 
 const app = express()
 
@@ -23,6 +25,8 @@ app.get("/", (req,res) => {
 
 
 app.use("/api/user", userRouter);
+app.use("/api/hotel", hotelRouter);
+app.use("/api/room", roomRouter);
 
 // Middleware for Errors
 

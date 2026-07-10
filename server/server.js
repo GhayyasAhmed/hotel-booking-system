@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import app from "./app.js"
 import connectDatabase from "./config/database.js"
+import connectCloudinary from "./config/cloudinary.js"
 
 
 // handling uncaught exception
@@ -17,6 +18,8 @@ dotenv.config({path: "./config/config.env"})
 
 //connecting db
 connectDatabase()
+connectCloudinary()
+
 
 const server = app.listen(process.env.PORT, ()=>{
     console.log(`Server is running on ${process.env.PORT} port`)
