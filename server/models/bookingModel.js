@@ -39,7 +39,7 @@ const bookingSchema = new mongoose.Schema({
         default: "pending"
     },
     paymentMethod: {
-        type: Number,
+        type: String,
         required: true,
         default: "pay at hotel"
     },

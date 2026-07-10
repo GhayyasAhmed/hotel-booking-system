@@ -56,7 +56,7 @@ export const createBooking = catchAsyncError(async (req, res, next) => {
 
     totalPrice *= numOfNights
 
-    await Booking.create({
+    const booking = await Booking.create({
         user,
         room,
         hotel: roomData.hotel._id,
@@ -65,6 +65,8 @@ export const createBooking = catchAsyncError(async (req, res, next) => {
         checkOutDate,
         totalPrice
     })
+
+    await booking.save();
 
     await sendEmail({
         email: req.user.email,
@@ -128,8 +130,8 @@ export const getHotelBookings = catchAsyncError(async (req, res, next) => {
 export const stripePayment = catchAsyncError(async (req, res, next) => {
     const { bookingId } = req.body;
     const booking = await Booking.findById(bookingId)
-    const roonData = await Room.findById(booking.room).populate("hotel")
-    const totalPrice = booking.totalPirce
+    const roomData = await Room.findById(booking.room).populate("hotel")
+    const totalPrice = booking.totalPrice
     const { origin } = req.headers
 
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
