@@ -4,6 +4,7 @@ import Room from "../models/roomModel.js";
 import catchAsyncError from "../middlewares/catchAsyncError.js"
 import ErrorHandler from "../utils/errorhandler.js"
 import Booking from "../models/bookingModel.js";
+import sendEmail from "../utils/sendEmail.js";
 
 
 
@@ -65,6 +66,25 @@ export const createBooking = catchAsyncError(async (req, res, next) => {
         checkOutDate,
         totalPrice
     })
+
+    await sendEmail({
+            email: req.user.email,
+            subject: `Hotel Booking Details`,
+            html: `
+                <h2>Your Booking Details</h2>
+                <p>Dear ${req.user.username},</p>
+                <p>Thank you for your booking! Here are your details:</p>
+                <ul>
+                    <li><strong>Booking ID:</strong> ${booking._id}</li>
+                    <li><strong>Hotel Name</strong> ${roomData.hotel.name}</li>
+                    <li><strong>Location:</strong> ${roomData.hotel.address}</li>
+                    <li><strong>Date:</strong> ${booking.checkInDate.toDateString()}</li>
+                    <li><strong>Booking Amount:</strong> $ ${booking.totalPrice}/night</li>
+                </ul>
+                <p>We look forward to welcome you!</p>
+                <p>If you need to make any changes, feel free to contact us.</p>
+            `
+        })
 
     return res.status(201).json({ success: true, message: "Booking created successfully" })
 
