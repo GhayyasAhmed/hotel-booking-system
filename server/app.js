@@ -6,9 +6,9 @@ import clerkWebhooks from "./controllers/clerkWebhooks.js"
 import userRouter from "./routes/userRoutes.js"
 import hotelRouter from "./routes/hotelRoutes.js"
 import roomRouter from "./routes/roomRoutes.js"
+import bookingRouter from "./routes/bookingRoutes.js"
 
 const app = express()
-
 
 app.use(cors())
 app.use(express.json());
@@ -27,6 +27,8 @@ app.get("/", (req,res) => {
 app.use("/api/user", userRouter);
 app.use("/api/hotel", hotelRouter);
 app.use("/api/room", roomRouter);
+app.use("/api/booking", bookingRouter);
+
 
 // Middleware for Errors
 
