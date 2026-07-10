@@ -19,19 +19,21 @@ const bookingSchema = new mongoose.Schema({
     },
     checkInDate: {
         type: Date,
-        required: true,
+        required: [true, "Check-in date is required."],
     },
      checkOutDate: {
         type: Date,
-        required: true,
+        required: [true, "Check-out date is required."],
     },
     totalPrice: {
         type: Number,
-        required: true,
+        required: [true, "Total price is required."],
+        min: [1, "Total price must be greater than 0."]
     },
     guests: {
         type: Number,
-        required: true
+        required: [true, "Number of guests is required."],
+        min: [1, "At least one guest is required."]
     },
     status: {
         type: String,
