@@ -1,0 +1,16 @@
+export const queryKeys = {
+  currentUser: ["current-user"],
+  users: ["users"],
+  hotels: ["hotels"],
+  hotel: (hotelId: string) => ["hotel", hotelId],
+  myHotel: ["my-hotel"],
+  rooms: ["rooms"],
+  room: (roomId: string) => ["room", roomId],
+  ownerRooms: ["owner-rooms"],
+  userBookings: ["user-bookings"],
+  hotelBookings: ["hotel-bookings"],
+  booking: (bookingId: string) => ["booking", bookingId],
+  reviews: ["reviews"],
+  review: (reviewId: string) => ["review", reviewId],
+  myReviews: ["my-reviews"],
+} as const;
