@@ -6,15 +6,18 @@ const hotelSchema = new mongoose.Schema({
 
     name: {
         type: String,
-        required: true
+        required: [true, "Hotel name is required."],
+        trim: true
     },
     address: {
         type: String,
-        required: true
+        required: [true, "Hotel address is required."],
+        trim: true
     },
     contact: {
         type: String,
-        required: true
+        required: [true, "Hotel contact is required."],
+        trim: true
     },
     owner: {
         type: String,
@@ -23,7 +26,8 @@ const hotelSchema = new mongoose.Schema({
     },
     city: {
         type: String,
-        required: true
+        required: [true, "Hotel city is required."],
+        trim: true
     }
 },
     {
