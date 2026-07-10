@@ -7,20 +7,22 @@ import userRouter from "./routes/userRoutes.js"
 import hotelRouter from "./routes/hotelRoutes.js"
 import roomRouter from "./routes/roomRoutes.js"
 import bookingRouter from "./routes/bookingRoutes.js"
+import reviewRouter from "./routes/reviewRoutes.js"
 import { stripeWebhooks } from "./controllers/stripeWebhooks.js"
 
 const app = express()
 
 app.use(cors())
-app.use(express.json());
-app.use(clerkMiddleware())
 
 // api to listen to stripe webhook
 app.post("/api/stripe", express.raw({type: "application/json"}), stripeWebhooks);
 
+app.use(express.json());
+app.use(clerkMiddleware())
+
 // api to listen to clerk webhook
 
-app.use("/api/clerk", clerkWebhooks);
+app.post("/api/clerk", clerkWebhooks);
 
 app.get("/", (req,res) => {
     return res.send("Api is working")
@@ -31,6 +33,7 @@ app.use("/api/user", userRouter);
 app.use("/api/hotel", hotelRouter);
 app.use("/api/room", roomRouter);
 app.use("/api/booking", bookingRouter);
+app.use("/api/review", reviewRouter);
 
 
 // Middleware for Errors
