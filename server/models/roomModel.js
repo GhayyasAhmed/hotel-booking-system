@@ -9,15 +9,17 @@ const roomSchema = new mongoose.Schema({
     },
     roomType: {
         type: String,
-        required: true
+        required: [true, "Room type is required."],
+        trim: true
     },
     pricePerNight: {
         type: Number,
-        required: true
+        required: [true, "Room price per night is required."],
+        min: [1, "Room price must be greater than 0."]
     },
     amenities: {
         type: Array,
-        required: true,
+        default: [],
     },
     images: [
         {
