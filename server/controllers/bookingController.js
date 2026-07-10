@@ -5,8 +5,7 @@ import catchAsyncError from "../middlewares/catchAsyncError.js"
 import ErrorHandler from "../utils/errorhandler.js"
 import Booking from "../models/bookingModel.js";
 import sendEmail from "../utils/sendEmail.js";
-
-
+import stripe from 'stripe';
 
 // function to check availability of room
 const checkAvailability = async (room, checkInDate, checkOutDate) => {
@@ -68,9 +67,9 @@ export const createBooking = catchAsyncError(async (req, res, next) => {
     })
 
     await sendEmail({
-            email: req.user.email,
-            subject: `Hotel Booking Details`,
-            html: `
+        email: req.user.email,
+        subject: `Hotel Booking Details`,
+        html: `
                 <h2>Your Booking Details</h2>
                 <p>Dear ${req.user.username},</p>
                 <p>Thank you for your booking! Here are your details:</p>
@@ -84,7 +83,7 @@ export const createBooking = catchAsyncError(async (req, res, next) => {
                 <p>We look forward to welcome you!</p>
                 <p>If you need to make any changes, feel free to contact us.</p>
             `
-        })
+    })
 
     return res.status(201).json({ success: true, message: "Booking created successfully" })
 
@@ -124,4 +123,44 @@ export const getHotelBookings = catchAsyncError(async (req, res, next) => {
     res.status(200).json({ success: true, data: { totalBookings, totalRevenue, bookings } })
 })
 
+
+
+export const stripePayment = catchAsyncError(async (req, res, next) => {
+    const { bookingId } = req.body;
+    const booking = await Booking.findById(bookingId)
+    const roonData = await Room.findById(booking.room).populate("hotel")
+    const totalPrice = booking.totalPirce
+    const { origin } = req.headers
+
+    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
+
+    const line_items = [
+        {
+            price_data: {
+                currency: "usd",
+                product_data: {
+                    name: roomData.hotel.name
+                },
+                unit_amount: totalPrice * 100
+            },
+            quantity: 1
+        }
+    ]
+
+
+    // create checkout session
+
+    const session = await stripeInstance.checkout.sessions.create({
+        line_items,
+        mode: "payment",
+        success_url: `${origin}/loader/my-bookings`,
+        cancel_url: `${origin}/my-bookings`,
+        metadata: {
+            bookingId
+        }
+    })
+
+    res.status(200).json({ success: true, url: session.url })
+
+})
 
