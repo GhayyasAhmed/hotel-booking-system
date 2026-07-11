@@ -21,7 +21,7 @@ export const AppLayout = () => {
             <span className="grid size-10 place-items-center rounded-full bg-[#102f2f] text-sm tracking-tight text-[#fffaf0] shadow-sm shadow-[#102f2f]/20">
               SN
             </span>
-            <span className="hidden text-base sm:inline">StayNest</span>
+            <span className="hidden text-base sm:inline">StayNeest</span>
           </NavLink>
 
           <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
@@ -77,7 +77,7 @@ export const AppLayout = () => {
 
       <footer className="border-t border-[#eadcc6] bg-[#fffaf0]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-sm text-[#53645b] sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <p className="font-semibold text-[#17201b]">StayNest</p>
+          <p className="font-semibold text-[#17201b]">StayNeest</p>
           <p>Curated stays, secure reservations, and effortless hosting.</p>
         </div>
       </footer>

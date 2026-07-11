@@ -1,4 +1,4 @@
-# StayNest — Hotel Booking Platform
+# StayNeest — Hotel Booking Platform
 
 Full-stack hotel booking app: browse hotels/rooms, book stays, pay via Stripe, leave reviews, and manage hotels/rooms/bookings as an owner.
 
