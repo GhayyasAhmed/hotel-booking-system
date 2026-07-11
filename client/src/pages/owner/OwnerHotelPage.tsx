@@ -345,8 +345,6 @@ const HotelCard = ({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export const OwnerHotelPage = () => {
   const getToken = useAuthToken();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
 
   const hotelQuery = useQuery<Awaited<ReturnType<typeof hotelService.getMyHotel>>, ApiRequestError>({
     queryKey: queryKeys.myHotel,

@@ -1,5 +1,5 @@
 import { apiRequest } from "../lib/api-client";
-import { type ApiSuccess, type User, type ApiError } from "../types/api";
+import { type ApiSuccess, type User } from "../types/api";
 
 export type SyncUserPayload = {
   username: string;

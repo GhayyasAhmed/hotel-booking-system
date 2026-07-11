@@ -1,4 +1,3 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -6,24 +5,25 @@ import {
   FiCalendar,
   FiCheck,
   FiCreditCard,
+  FiInfo,
   FiLoader,
   FiMapPin,
   FiStar,
   FiUsers,
   FiX,
-  FiInfo,
 } from "react-icons/fi";
+import { Link, useParams } from "react-router-dom";
 import { ErrorState } from "../../components/feedback/ErrorState";
 import { LoadingGrid } from "../../components/feedback/LoadingGrid";
 import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
+import { useAuthToken } from "../../hooks/use-auth-token";
+import { getErrorMessage } from "../../lib/api-error";
 import { formatCurrency, getHotelCity, getHotelName } from "../../lib/format";
 import { getRoomImage } from "../../lib/images";
 import { bookingService } from "../../services/bookingService";
 import { queryKeys } from "../../services/queryKeys";
-import { useAuthToken } from "../../hooks/use-auth-token";
-import { getErrorMessage } from "../../lib/api-error";
-import { type Booking, type BookingStatus, type Room } from "../../types/api";
+import { type BookingStatus, type Room } from "../../types/api";
 
 const statusStyles: Record<BookingStatus, string> = {
   pending: "bg-amber-100 text-amber-800",
@@ -64,7 +64,6 @@ const InfoRow = ({
 
 export const BookingDetailPage = () => {
   const { bookingId = "" } = useParams();
-  const navigate = useNavigate();
   const getToken = useAuthToken();
   const queryClient = useQueryClient();
 

@@ -10,11 +10,10 @@ import {
 } from "react-icons/fi";
 import { EmptyState } from "../../components/feedback/EmptyState";
 import { ErrorState } from "../../components/feedback/ErrorState";
-import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
 import { useAuthToken } from "../../hooks/use-auth-token";
-import { getErrorMessage, ApiRequestError } from "../../lib/api-error";
-import { formatCurrency, getHotelCity, getRoomType } from "../../lib/format";
+import { ApiRequestError, getErrorMessage } from "../../lib/api-error";
+import { formatCurrency, getRoomType } from "../../lib/format";
 import { bookingService } from "../../services/bookingService";
 import { queryKeys } from "../../services/queryKeys";
 import { type Booking, type BookingStatus, type User } from "../../types/api";
