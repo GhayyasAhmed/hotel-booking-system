@@ -157,10 +157,12 @@ const BookingRow = ({ booking }: { booking: Booking }) => {
       </div>
 
       {/* Status control */}
-      <div className="mt-4 flex items-center gap-3">
-        <p className="text-sm font-medium text-[#31423a]">Update status:</p>
-        <StatusSelect bookingId={booking._id} current={booking.status} />
-      </div>
+      {!booking.isPaid && (
+        <div className="mt-4 flex items-center gap-3">
+          <p className="text-sm font-medium text-[#31423a]">Update status:</p>
+          <StatusSelect bookingId={booking._id} current={booking.status} />
+        </div>
+      )}
     </div>
   );
 };
