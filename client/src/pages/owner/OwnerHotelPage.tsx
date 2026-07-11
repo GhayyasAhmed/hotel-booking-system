@@ -16,7 +16,7 @@ import { ErrorState } from "../../components/feedback/ErrorState";
 import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
 import { useAuthToken } from "../../hooks/use-auth-token";
-import { getErrorMessage } from "../../lib/api-error";
+import { getErrorMessage, ApiRequestError } from "../../lib/api-error";
 import { type HotelPayload, hotelService } from "../../services/hotelService";
 import { queryKeys } from "../../services/queryKeys";
 
@@ -271,7 +271,14 @@ const HotelCard = ({
 export const OwnerHotelPage = () => {
   const getToken = useAuthToken();
 
-  const hotelQuery = useQuery({
+  // const hotelQuery = useQuery({
+  //   queryKey: queryKeys.myHotel,
+  //   queryFn: async () => {
+  //     const token = await getToken();
+  //     return hotelService.getMyHotel(token);
+  //   },
+  // });
+  const hotelQuery = useQuery<Awaited<ReturnType<typeof hotelService.getMyHotel>>, ApiRequestError>({
     queryKey: queryKeys.myHotel,
     queryFn: async () => {
       const token = await getToken();

@@ -13,7 +13,7 @@ import { ErrorState } from "../../components/feedback/ErrorState";
 import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
 import { useAuthToken } from "../../hooks/use-auth-token";
-import { getErrorMessage } from "../../lib/api-error";
+import { getErrorMessage, ApiRequestError } from "../../lib/api-error";
 import { formatCurrency, getHotelCity, getRoomType } from "../../lib/format";
 import { bookingService } from "../../services/bookingService";
 import { queryKeys } from "../../services/queryKeys";
@@ -169,7 +169,7 @@ const BookingRow = ({ booking }: { booking: Booking }) => {
 export const OwnerBookingsPage = () => {
   const getToken = useAuthToken();
 
-  const bookingsQuery = useQuery({
+  const bookingsQuery = useQuery<Awaited<ReturnType<typeof bookingService.getHotelBookings>>, ApiRequestError>({
     queryKey: queryKeys.hotelBookings,
     queryFn: async () => {
       const token = await getToken();

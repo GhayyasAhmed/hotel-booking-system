@@ -446,9 +446,7 @@ export const OwnerRoomsPage = () => {
     },
   });
   
-  console.log("roomsQuery", roomsQuery)
-  console.log("roomsQuery?.error?.message", roomsQuery?.error?.message)
-    // console.log("roomsQuery?.error?.status", roomsQuery?.error?.status)
+ 
   return (
     <PageShell
       eyebrow="Owner"
