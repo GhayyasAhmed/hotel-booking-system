@@ -18,11 +18,13 @@ export const requireClerkAuth = catchAsyncError(async (req, res, next) => {
 });
 
 export const isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
-    const userId = req.auth?.userId;
-
-    if (!userId) {
+    // const userId = req.auth?.userId;
+    // console.log("req.auth", req.auth)
+     const { isAuthenticated, userId } = getAuth(req)
+    if (!userId || !isAuthenticated) {
         return next(new ErrorHandler("Authentication required. Please login to continue.", 401));
     }
+    console.log("userId", userId)
 
     const user = await User.findById(userId);
 

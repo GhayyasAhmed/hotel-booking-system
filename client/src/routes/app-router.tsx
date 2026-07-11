@@ -3,6 +3,7 @@ import { AppLayout } from "../layouts/AppLayout";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { BookingDetailPage } from "../pages/bookings/BookingDetailPage";
 import { BookingCreatePage } from "../pages/bookings/BookingCreatePage";
+import { StripeSuccessPage } from "../pages/bookings/StripeSuccessPage";
 import { HotelDetailPage } from "../pages/hotels/HotelDetailPage";
 import { HotelsPage } from "../pages/hotels/HotelsPage";
 import { HomePage } from "../pages/HomePage";
@@ -43,6 +44,15 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <BookingDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        // Stripe redirects here after successful payment; briefly shown then auto-navigates
+        path: "loader/my-bookings",
+        element: (
+          <ProtectedRoute>
+            <StripeSuccessPage />
           </ProtectedRoute>
         ),
       },
