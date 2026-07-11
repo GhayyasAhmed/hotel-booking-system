@@ -31,15 +31,13 @@
 // );
 
 
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { LoadingGrid } from "../../components/feedback/LoadingGrid";
 import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
-import { LoadingGrid } from "../../components/feedback/LoadingGrid";
-import { getErrorMessage } from "../../lib/api-error";
 import { useAuthToken } from "../../hooks/use-auth-token";
 import { hotelService } from "../../services/hotelService";
 import { queryKeys } from "../../services/queryKeys";
@@ -90,6 +88,15 @@ export const OwnerDashboardPage = () => {
       ) : (
         <div className="grid gap-6 md:grid-cols-3">
           <Link
+            to="/owner/hotel"
+            className="rounded-lg border border-[#eadcc6] bg-[#fffaf0] p-6 hover:shadow-md transition"
+          >
+            <h3 className="font-semibold text-[#17201b]">Hotel details</h3>
+            <p className="mt-1 text-sm text-[#53645b]">
+              Update your hotel information and images
+            </p>
+          </Link>
+          <Link
             to="/owner/rooms"
             className="rounded-lg border border-[#eadcc6] bg-[#fffaf0] p-6 hover:shadow-md transition"
           >
@@ -97,7 +104,7 @@ export const OwnerDashboardPage = () => {
             <p className="mt-1 text-sm text-[#53645b]">
               Add, edit, or remove rooms in your hotel
             </p>
-          </Link>
+          </Link>       
           <Link
             to="/owner/bookings"
             className="rounded-lg border border-[#eadcc6] bg-[#fffaf0] p-6 hover:shadow-md transition"
@@ -107,15 +114,8 @@ export const OwnerDashboardPage = () => {
               View and manage bookings for your property
             </p>
           </Link>
-          <Link
-            to="/owner/hotel"
-            className="rounded-lg border border-[#eadcc6] bg-[#fffaf0] p-6 hover:shadow-md transition"
-          >
-            <h3 className="font-semibold text-[#17201b]">Hotel details</h3>
-            <p className="mt-1 text-sm text-[#53645b]">
-              Update your hotel information and images
-            </p>
-          </Link>
+          
+
         </div>
       )}
     </PageShell>
