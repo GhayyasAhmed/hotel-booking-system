@@ -20,7 +20,6 @@ export const isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
     if (!userId || !isAuthenticated) {
         return next(new ErrorHandler("Authentication required. Please login to continue.", 401));
     }
-    console.log("userId", userId)
 
     const user = await User.findById(userId);
 

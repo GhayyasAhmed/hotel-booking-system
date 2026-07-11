@@ -23,8 +23,10 @@ export const OwnerSignupPage = () => {
       const token = await getToken();
       return userService.updateRole("owner", token);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Welcome! You're now a property owner.");
+      // Force Clerk to re-fetch session so publicMetadata.role updates immediately
+      await user?.reload();
       queryClient.invalidateQueries({ queryKey: queryKeys.currentUser });
       navigate("/owner/hotel");
     },

@@ -4,9 +4,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useSyncUser } from "../hooks/use-sync-user";
 export const AppLayout = () => {
-  const user1 = useSyncUser();
+  useSyncUser();
   const { user } = useUser();
-
   const navItems = [
     { href: "/", label: "Home", icon: FiHome },
     { href: "/hotels", label: "Hotels", icon: FiSearch },
