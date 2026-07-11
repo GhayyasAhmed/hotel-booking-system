@@ -7,7 +7,8 @@ import {
     getUserData,
     storeRecentSearchedCities,
     syncUser,
-    updateCurrentUser
+    updateCurrentUser,
+    updateRole
 } from "../controllers/userController.js";
 
 const router = Router()
@@ -18,6 +19,7 @@ router.get("/", isAuthenticatedUser, getUserData)
 router.patch("/", isAuthenticatedUser, updateCurrentUser)
 router.delete("/", isAuthenticatedUser, deleteCurrentUser)
 router.get("/all", isAuthenticatedUser, authorizeRoles("owner"), getAllUsers)
+router.patch("/role/:role", isAuthenticatedUser, updateRole);
 router.post("/store-recent-search", isAuthenticatedUser, storeRecentSearchedCities)
 router.get("/:id", isAuthenticatedUser, getUserById)
 
