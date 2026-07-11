@@ -1,20 +1,19 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { FiBriefcase, FiCalendar, FiHome, FiMenu, FiSearch, FiStar } from "react-icons/fi";
 import { NavLink, Outlet } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useSyncUser } from "../hooks/use-sync-user";
-
-const navItems = [
-  { href: "/", label: "Home", icon: FiHome },
-  { href: "/hotels", label: "Hotels", icon: FiSearch },
-  { href: "/my-bookings", label: "My bookings", icon: FiCalendar },
-  { href: "/my-reviews", label: "My reviews", icon: FiStar },
-  { href: "/owner", label: "Owner", icon: FiBriefcase },
-];
-
 export const AppLayout = () => {
-  useSyncUser();
+  const user1 = useSyncUser();
+  const { user } = useUser();
 
+  const navItems = [
+    { href: "/", label: "Home", icon: FiHome },
+    { href: "/hotels", label: "Hotels", icon: FiSearch },
+    { href: "/my-bookings", label: "My bookings", icon: FiCalendar },
+    { href: "/my-reviews", label: "My reviews", icon: FiStar },
+    ...(user?.publicMetadata?.role === "owner" ? [{ href: "/owner", label: "Owner", icon: FiBriefcase }] : []),
+  ];
   return (
     <div className="flex min-h-screen flex-col bg-[#f7f2ea] text-[#17201b]">
       <header className="sticky top-0 z-30 border-b border-[#eadcc6] bg-[#fffaf0]/90 shadow-sm shadow-[#8f6a3a]/5 backdrop-blur-xl">
@@ -30,10 +29,9 @@ export const AppLayout = () => {
             {navItems.map(({ href, icon: Icon, label }) => (
               <NavLink
                 className={({ isActive }) =>
-                  `inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    isActive
-                      ? "bg-[#102f2f] text-[#fffaf0] shadow-sm"
-                      : "text-[#53645b] hover:bg-[#efe2cd] hover:text-[#17201b]"
+                  `inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${isActive
+                    ? "bg-[#102f2f] text-[#fffaf0] shadow-sm"
+                    : "text-[#53645b] hover:bg-[#efe2cd] hover:text-[#17201b]"
                   }`
                 }
                 key={href}
@@ -43,6 +41,15 @@ export const AppLayout = () => {
                 {label}
               </NavLink>
             ))}
+            {user && user?.publicMetadata?.role !== "owner" && (
+              <NavLink to="/owner-signup">
+                <Button variant="secondary">
+                  <FiBriefcase aria-hidden="true" />
+                  Become owner
+                </Button>
+              </NavLink>
+            )}
+
           </nav>
 
           <div className="flex items-center gap-3">

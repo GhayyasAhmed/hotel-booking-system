@@ -1,14 +1,10 @@
+import { getAuth } from '@clerk/express';
 import User from "../models/userModel.js";
 import ErrorHandler from "../utils/errorhandler.js";
 import catchAsyncError from "./catchAsyncError.js";
-import { clerkMiddleware, clerkClient, getAuth } from '@clerk/express'
 export const requireClerkAuth = catchAsyncError(async (req, res, next) => {
-    // const userId = req.auth?.userId;
     const { isAuthenticated, userId } = getAuth(req)
-    // console.log("isAuthenticated", isAuthenticated)
-    // console.log("userId", userId)
-    // console.log("req.auth", req.auth)
-    // console.log("req.auth.userId", req.auth?.userId)
+
      if (!userId || !isAuthenticated) {
         return next(new ErrorHandler("Authentication required. Please login to continue.", 401));
     }
@@ -43,4 +39,12 @@ export const authorizeRoles = (...roles) => (req, res, next) => {
     }
 
     next();
+};
+
+
+export const authorizeOwner = (req, res, next) => {
+  if (req.user.role !== "owner") {
+    return res.status(403).json({success: false, message: "Only owners can access this." });
+  }
+  next();
 };

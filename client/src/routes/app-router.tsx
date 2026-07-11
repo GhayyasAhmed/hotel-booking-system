@@ -1,21 +1,22 @@
 import { createBrowserRouter } from "react-router";
 import { AppLayout } from "../layouts/AppLayout";
-import { ProtectedRoute } from "./ProtectedRoute";
-import { BookingDetailPage } from "../pages/bookings/BookingDetailPage";
 import { BookingCreatePage } from "../pages/bookings/BookingCreatePage";
+import { BookingDetailPage } from "../pages/bookings/BookingDetailPage";
+import { MyBookingsPage } from "../pages/bookings/MyBookingsPage";
 import { StripeSuccessPage } from "../pages/bookings/StripeSuccessPage";
+import { HomePage } from "../pages/HomePage";
 import { HotelDetailPage } from "../pages/hotels/HotelDetailPage";
 import { HotelsPage } from "../pages/hotels/HotelsPage";
-import { HomePage } from "../pages/HomePage";
-import { MyBookingsPage } from "../pages/bookings/MyBookingsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { OwnerBookingsPage } from "../pages/owner/OwnerBookingsPage";
 import { OwnerDashboardPage } from "../pages/owner/OwnerDashboardPage";
 import { OwnerHotelPage } from "../pages/owner/OwnerHotelPage";
 import { OwnerRoomsPage } from "../pages/owner/OwnerRoomsPage";
-import { OwnerBookingsPage } from "../pages/owner/OwnerBookingsPage";
-import { RoomDetailPage } from "../pages/rooms/RoomDetailPage";
-import { ReviewCreatePage } from "../pages/reviews/ReviewCreatePage";
+import { OwnerSignupPage } from "../pages/owner/OwnerSignupPage";
 import { MyReviewsPage } from "../pages/reviews/MyReviewsPage";
+import { ReviewCreatePage } from "../pages/reviews/ReviewCreatePage";
+import { RoomDetailPage } from "../pages/rooms/RoomDetailPage";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
       {
         path: "my-reviews",
         element: <ProtectedRoute><MyReviewsPage /></ProtectedRoute>,
+      },
+      {
+        path: "owner-signup",
+        element: <ProtectedRoute><OwnerSignupPage /></ProtectedRoute>,
       },
       { path: "*", element: <NotFoundPage /> },
     ],

@@ -120,7 +120,7 @@ export const deleteHotel = catchAsyncError(async (req, res, next) => {
     await Booking.deleteMany({ hotel: hotel._id });
     await Room.deleteMany({ _id: { $in: roomIds } });
     await Hotel.findByIdAndDelete(hotel._id);
-    await User.findByIdAndUpdate(req.user._id, { role: "user" }, { runValidators: true });
+    // await User.findByIdAndUpdate(req.user._id, { role: "user" }, { runValidators: true });
 
     res.status(200).json({ success: true, message: "Hotel deleted successfully." });
 });

@@ -6,6 +6,7 @@ import { useAuthToken } from "./use-auth-token";
 
 export const useSyncUser = () => {
   const { isLoaded, isSignedIn, user } = useUser();
+  // console.log("user.publicMetadata", user.publicMetadata)
   const getToken = useAuthToken();
 
   const syncMutation = useMutation({

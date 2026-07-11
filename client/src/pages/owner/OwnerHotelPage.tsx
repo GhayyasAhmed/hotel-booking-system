@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -12,11 +12,12 @@ import {
   FiTrash2,
   FiX,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { ErrorState } from "../../components/feedback/ErrorState";
 import { Button } from "../../components/ui/Button";
 import { PageShell } from "../../components/ui/PageShell";
 import { useAuthToken } from "../../hooks/use-auth-token";
-import { getErrorMessage, ApiRequestError } from "../../lib/api-error";
+import { ApiRequestError, getErrorMessage } from "../../lib/api-error";
 import { type HotelPayload, hotelService } from "../../services/hotelService";
 import { queryKeys } from "../../services/queryKeys";
 
@@ -40,6 +41,53 @@ const Field = ({
 
 const inputClass =
   "h-11 w-full rounded-lg border border-[#ddc8a3] bg-white px-4 text-sm outline-none ring-[#d7a85f]/30 focus:ring-4";
+
+
+
+
+const DeleteHotelModal = ({
+  isOpen,
+  onConfirm,
+  onCancel,
+  isLoading
+}: {
+  isOpen: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+  isLoading: boolean;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="text-lg font-semibold text-[#17201b]">Delete hotel?</h2>
+        <p className="mt-3 text-sm text-[#53645b]">
+          This will permanently remove your hotel, all rooms, bookings, and associated reviews.
+          <strong> This action cannot be undone.</strong>
+        </p>
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={onCancel}
+            disabled={isLoading}
+            className="flex-1 rounded-lg border border-[#ddc8a3] px-4 py-2 text-sm font-medium text-[#53645b] hover:bg-[#f3e8d4] transition"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="flex-1 rounded-lg bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 transition disabled:opacity-50"
+          >
+            {/* <FiLoader className="animate-spin" aria-hidden="true" /> */}
+            {isLoading ? "Deleting..." : "Delete permanently"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // ─── Register form (no hotel yet) ────────────────────────────────────────────
 const RegisterHotelForm = () => {
@@ -197,9 +245,10 @@ const HotelCard = ({
   hotel: { _id: string; name: string; city: string; address: string; contact: string };
 }) => {
   const [editing, setEditing] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const getToken = useAuthToken();
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
@@ -208,19 +257,29 @@ const HotelCard = ({
     onSuccess: () => {
       toast.success("Hotel deleted.");
       queryClient.invalidateQueries({ queryKey: queryKeys.myHotel });
+      navigate("/owner");
     },
     onError: (err) => toast.error(getErrorMessage(err)),
   });
 
-  const handleDelete = () => {
-    if (
-      !window.confirm(
-        "Delete this hotel? All rooms and bookings associated with it will also be removed. This cannot be undone.",
-      )
-    )
-      return;
-    deleteMutation.mutate();
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
   };
+
+  const handleConfirmDelete = () => {
+    deleteMutation.mutate();
+    setShowDeleteModal(false);
+  };
+
+  // const handleDelete = () => {
+  //   if (
+  //     !window.confirm(
+  //       "Delete this hotel? All rooms and bookings associated with it will also be removed. This cannot be undone.",
+  //     )
+  //   )
+  //     return;
+  //   deleteMutation.mutate();
+  // };
 
   if (editing) return <EditHotelForm hotel={hotel} onCancel={() => setEditing(false)} />;
 
@@ -240,6 +299,22 @@ const HotelCard = ({
           </Button>
           <Button
             variant="danger"
+            onClick={handleDeleteClick}
+            disabled={deleteMutation.isPending}
+          >
+            <FiTrash2 aria-hidden="true" />
+            Delete hotel
+          </Button>
+
+          {/* Add modal at end of return JSX */}
+          <DeleteHotelModal
+            isOpen={showDeleteModal}
+            onConfirm={handleConfirmDelete}
+            onCancel={() => setShowDeleteModal(false)}
+            isLoading={deleteMutation.isPending}
+          />
+          {/* <Button
+            variant="danger"
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
@@ -249,7 +324,7 @@ const HotelCard = ({
               <FiTrash2 aria-hidden="true" />
             )}
             Delete
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -270,14 +345,9 @@ const HotelCard = ({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export const OwnerHotelPage = () => {
   const getToken = useAuthToken();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  // const hotelQuery = useQuery({
-  //   queryKey: queryKeys.myHotel,
-  //   queryFn: async () => {
-  //     const token = await getToken();
-  //     return hotelService.getMyHotel(token);
-  //   },
-  // });
+
   const hotelQuery = useQuery<Awaited<ReturnType<typeof hotelService.getMyHotel>>, ApiRequestError>({
     queryKey: queryKeys.myHotel,
     queryFn: async () => {

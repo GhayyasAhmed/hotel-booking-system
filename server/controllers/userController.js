@@ -5,6 +5,7 @@ import Room from "../models/roomModel.js";
 import User from "../models/userModel.js";
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../utils/errorhandler.js";
+import { clerkClient } from "@clerk/express";
 
 const pickUserFields = (body) => {
     const updates = {};
@@ -127,4 +128,34 @@ export const storeRecentSearchedCities = catchAsyncError(async (req, res, next) 
         message: "City added successfully.",
         recentSearchCities: req.user.recentSearchCities
     });
+});
+
+
+export const updateRole = catchAsyncError(async (req, res, next) => {
+  const { role } = req.params;
+
+  if (!["user", "owner"].includes(role)) {
+    return next(new ErrorHandler("Invalid role.", 400));
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { role },
+    { returnDocument: "after", runValidators: true }
+  );
+
+  // Update Clerk metadata
+  if (process.env.CLERK_SECRET_KEY) {
+    const clerkUser = await clerkClient.users.updateUser(user._id, {
+      publicMetadata: { role },
+    });
+  }
+
+  await user.save()
+
+  res.status(200).json({
+    success: true,
+    message: `Role updated to ${role}.`,
+    user,
+  });
 });

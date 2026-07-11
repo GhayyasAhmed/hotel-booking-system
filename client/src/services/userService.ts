@@ -22,6 +22,11 @@ export const userService = {
       token,
     }),
 
+  updateRole: (role: "user" | "owner", token: string | null) =>
+    apiRequest<ApiSuccess<{ message: string; user: User }>>(`/api/user/role/${role}`, {
+      method: "PATCH",
+      token
+    }),
   updateCurrent: (payload: UpdateUserPayload, token: string | null) =>
     apiRequest<ApiSuccess<{ message: string; user: User }>>("/api/user", {
       method: "PATCH",
