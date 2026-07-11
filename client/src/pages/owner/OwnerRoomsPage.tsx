@@ -7,6 +7,6 @@ export const OwnerRoomsPage = () => (
     eyebrow="Owner"
     title="Manage rooms"
   >
-    <EmptyState title="Room management is ready" message="Step 6 will connect this page to /api/room owner endpoints." />
+    <EmptyState title="No rooms listed yet" message="Create polished room listings with photos, amenities, pricing, and availability." />
   </PageShell>
 );

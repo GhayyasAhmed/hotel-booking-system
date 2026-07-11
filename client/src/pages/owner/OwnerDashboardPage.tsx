@@ -11,19 +11,19 @@ const ownerLinks = [
 
 export const OwnerDashboardPage = () => (
   <PageShell
-    description="This protected area will manage hotel registration, rooms, availability, and booking statuses."
+    description="Run your property from one calm workspace: rooms, reservations, availability, and guest experience."
     eyebrow="Owner"
     title="Owner dashboard"
   >
     <div className="grid gap-4 md:grid-cols-3">
       {ownerLinks.map(({ href, icon: Icon, label }) => (
         <Link
-          className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+          className="rounded-lg border border-[#eadcc6] bg-[#fffaf0] p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8f6a3a]/10"
           key={href}
           to={href}
         >
-          <Icon className="size-6 text-cyan-700" aria-hidden="true" />
-          <p className="mt-6 font-semibold text-slate-950">{label}</p>
+          <Icon className="size-6 text-[#8a642f]" aria-hidden="true" />
+          <p className="mt-6 font-semibold text-[#17201b]">{label}</p>
         </Link>
       ))}
     </div>

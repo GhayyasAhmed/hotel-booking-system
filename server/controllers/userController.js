@@ -36,7 +36,7 @@ export const syncUser = catchAsyncError(async (req, res, next) => {
             image: image || ""
         },
         {
-            new: true,
+            returnDocument: 'after',
             upsert: true,
             runValidators: true,
             setDefaultsOnInsert: true

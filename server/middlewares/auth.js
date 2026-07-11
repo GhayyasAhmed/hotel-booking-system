@@ -1,11 +1,15 @@
 import User from "../models/userModel.js";
 import ErrorHandler from "../utils/errorhandler.js";
 import catchAsyncError from "./catchAsyncError.js";
-
+import { clerkMiddleware, clerkClient, getAuth } from '@clerk/express'
 export const requireClerkAuth = catchAsyncError(async (req, res, next) => {
-    const userId = req.auth?.userId;
-
-    if (!userId) {
+    // const userId = req.auth?.userId;
+    const { isAuthenticated, userId } = getAuth(req)
+    // console.log("isAuthenticated", isAuthenticated)
+    // console.log("userId", userId)
+    // console.log("req.auth", req.auth)
+    // console.log("req.auth.userId", req.auth?.userId)
+     if (!userId || !isAuthenticated) {
         return next(new ErrorHandler("Authentication required. Please login to continue.", 401));
     }
 

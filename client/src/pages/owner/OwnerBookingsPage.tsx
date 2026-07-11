@@ -7,6 +7,6 @@ export const OwnerBookingsPage = () => (
     eyebrow="Owner"
     title="Hotel bookings"
   >
-    <EmptyState title="Booking operations are ready" message="Step 6 will connect this page to /api/booking/hotel." />
+    <EmptyState title="No hotel bookings yet" message="New reservations will appear here with guest details, revenue, and status controls." />
   </PageShell>
 );

@@ -7,6 +7,6 @@ export const BookingDetailPage = () => (
     eyebrow="Booking"
     title="Booking details"
   >
-    <EmptyState title="Booking detail page is ready" message="We will connect this to /api/booking/:id." />
+    <EmptyState title="Booking details unavailable" message="Choose a reservation from your bookings to view stay details and next actions." />
   </PageShell>
 );

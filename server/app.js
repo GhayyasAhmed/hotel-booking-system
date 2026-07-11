@@ -22,7 +22,7 @@ app.use(clerkMiddleware())
 
 // api to listen to clerk webhook
 
-app.post("/api/clerk", clerkWebhooks);
+app.use("/api/clerk", clerkWebhooks);
 
 app.get("/", (req,res) => {
     return res.send("Api is working")

@@ -3,10 +3,10 @@ import { EmptyState } from "../../components/feedback/EmptyState";
 
 export const MyBookingsPage = () => (
   <PageShell
-    description="This protected page will list bookings for the signed-in user."
+    description="Track upcoming stays, review reservation details, and manage your travel plans."
     eyebrow="Guest"
     title="My bookings"
   >
-    <EmptyState title="No bookings loaded yet" message="Step 5 will connect this page to /api/booking/user." />
+    <EmptyState title="No stays booked yet" message="Browse available rooms and reserve the stay that fits your schedule." />
   </PageShell>
 );

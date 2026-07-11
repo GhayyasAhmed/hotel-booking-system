@@ -7,6 +7,6 @@ export const OwnerHotelPage = () => (
     eyebrow="Owner"
     title="Manage hotel"
   >
-    <EmptyState title="Hotel management is ready" message="Step 6 will connect this page to the hotel CRUD APIs." />
+    <EmptyState title="Create your hotel profile" message="Add your property details so guests can discover your rooms and make reservations." />
   </PageShell>
 );
