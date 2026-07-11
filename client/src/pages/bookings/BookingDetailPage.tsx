@@ -11,6 +11,7 @@ import {
   FiStar,
   FiUsers,
   FiX,
+  FiInfo,
 } from "react-icons/fi";
 import { ErrorState } from "../../components/feedback/ErrorState";
 import { LoadingGrid } from "../../components/feedback/LoadingGrid";
@@ -122,8 +123,10 @@ export const BookingDetailPage = () => {
   const { booking } = bookingQuery.data;
   const room = booking.room as Room;
   const nights = calcNights(booking.checkInDate, booking.checkOutDate);
+  
   const isCancelled = booking.status === "cancelled";
-  const canPay = !booking.isPaid && !isCancelled;
+  const isPending = booking.status === "pending";
+  const canPay = !booking.isPaid && booking.status === "confirmed";
   const canCancel = !isCancelled;
 
   return (
@@ -215,45 +218,54 @@ export const BookingDetailPage = () => {
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-wrap gap-3">
-            {canPay && (
-              <Button
-                onClick={() => payMutation.mutate()}
-                disabled={payMutation.isPending}
-              >
-                {payMutation.isPending ? (
-                  <FiLoader className="animate-spin" aria-hidden="true" />
-                ) : (
-                  <FiCreditCard aria-hidden="true" />
-                )}
-                Pay with Stripe
-              </Button>
+          {/* Actions & Notices */}
+          <div className="space-y-4">
+            {isPending && !booking.isPaid && (
+              <div className="flex items-center gap-2 rounded-lg border border-[#eadcc6] bg-[#fdf8f0] px-4 py-3 text-sm text-[#8a642f]">
+                <FiInfo className="size-4 shrink-0" aria-hidden="true" />
+                <span>You can pay once the owner confirms your booking.</span>
+              </div>
             )}
 
-            {!isCancelled && (
-              <Link to={`/bookings/${booking._id}/review`}>
-                <Button variant="secondary">
-                  <FiStar aria-hidden="true" />
-                  Write a review
+            <div className="flex flex-wrap gap-3">
+              {canPay && (
+                <Button
+                  onClick={() => payMutation.mutate()}
+                  disabled={payMutation.isPending}
+                >
+                  {payMutation.isPending ? (
+                    <FiLoader className="animate-spin" aria-hidden="true" />
+                  ) : (
+                    <FiCreditCard aria-hidden="true" />
+                  )}
+                  Pay with Stripe
                 </Button>
-              </Link>
-            )}
+              )}
 
-            {canCancel && (
-              <Button
-                variant="danger"
-                onClick={handleCancel}
-                disabled={cancelMutation.isPending}
-              >
-                {cancelMutation.isPending ? (
-                  <FiLoader className="animate-spin" aria-hidden="true" />
-                ) : (
-                  <FiX aria-hidden="true" />
-                )}
-                Cancel booking
-              </Button>
-            )}
+              {!isCancelled && (
+                <Link to={`/bookings/${booking._id}/review`}>
+                  <Button variant="secondary">
+                    <FiStar aria-hidden="true" />
+                    Write a review
+                  </Button>
+                </Link>
+              )}
+
+              {canCancel && (
+                <Button
+                  variant="danger"
+                  onClick={handleCancel}
+                  disabled={cancelMutation.isPending}
+                >
+                  {cancelMutation.isPending ? (
+                    <FiLoader className="animate-spin" aria-hidden="true" />
+                  ) : (
+                    <FiX aria-hidden="true" />
+                  )}
+                  Cancel booking
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
