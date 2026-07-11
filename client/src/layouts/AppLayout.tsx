@@ -1,13 +1,14 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { FiBriefcase, FiCalendar, FiHome, FiMenu, FiSearch, FiStar } from "react-icons/fi";
 import { NavLink, Outlet } from "react-router-dom";
-import { FiBriefcase, FiCalendar, FiHome, FiMenu, FiSearch } from "react-icons/fi";
-import { useSyncUser } from "../hooks/use-sync-user";
 import { Button } from "../components/ui/Button";
+import { useSyncUser } from "../hooks/use-sync-user";
 
 const navItems = [
   { href: "/", label: "Home", icon: FiHome },
   { href: "/hotels", label: "Hotels", icon: FiSearch },
   { href: "/my-bookings", label: "My bookings", icon: FiCalendar },
+  { href: "/my-reviews", label: "My reviews", icon: FiStar },
   { href: "/owner", label: "Owner", icon: FiBriefcase },
 ];
 

@@ -232,7 +232,7 @@ export const BookingDetailPage = () => {
             )}
 
             {!isCancelled && (
-              <Link to={`/rooms/${typeof room === "object" ? room._id : room}`}>
+              <Link to={`/bookings/${booking._id}/review`}>
                 <Button variant="secondary">
                   <FiStar aria-hidden="true" />
                   Write a review

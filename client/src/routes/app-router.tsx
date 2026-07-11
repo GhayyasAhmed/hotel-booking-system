@@ -14,6 +14,8 @@ import { OwnerHotelPage } from "../pages/owner/OwnerHotelPage";
 import { OwnerRoomsPage } from "../pages/owner/OwnerRoomsPage";
 import { OwnerBookingsPage } from "../pages/owner/OwnerBookingsPage";
 import { RoomDetailPage } from "../pages/rooms/RoomDetailPage";
+import { ReviewCreatePage } from "../pages/reviews/ReviewCreatePage";
+import { MyReviewsPage } from "../pages/reviews/MyReviewsPage";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +89,14 @@ export const router = createBrowserRouter([
             <OwnerBookingsPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "bookings/:bookingId/review",
+        element: <ProtectedRoute><ReviewCreatePage /></ProtectedRoute>,
+      },
+      {
+        path: "my-reviews",
+        element: <ProtectedRoute><MyReviewsPage /></ProtectedRoute>,
       },
       { path: "*", element: <NotFoundPage /> },
     ],
