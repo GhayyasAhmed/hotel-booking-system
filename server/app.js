@@ -34,6 +34,10 @@ app.get("/debug-env", (req, res) => {
     hasClerk: !!process.env.CLERK_SECRET_KEY,
     hasStripe: !!process.env.STRIPE_SECRET_KEY,
     nodeEnv: process.env.NODE_ENV,
+    dbState: mongoose.connection.readyState,
+    Db: process.env.DB_URI,
+    Clerk: process.env.CLERK_SECRET_KEY,
+    Stripe: process.env.STRIPE_SECRET_KEY
   });
 });
 
