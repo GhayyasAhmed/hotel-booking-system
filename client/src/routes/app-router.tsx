@@ -17,6 +17,7 @@ import { MyReviewsPage } from "../pages/reviews/MyReviewsPage";
 import { ReviewCreatePage } from "../pages/reviews/ReviewCreatePage";
 import { RoomDetailPage } from "../pages/rooms/RoomDetailPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { ProtectedOwnerRoute } from "./ProtectedOwnerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -63,7 +64,9 @@ export const router = createBrowserRouter([
         path: "owner",
         element: (
           <ProtectedRoute>
-            <OwnerDashboardPage />
+            <ProtectedOwnerRoute>
+              <OwnerDashboardPage />
+            </ProtectedOwnerRoute>
           </ProtectedRoute>
         ),
       },
@@ -71,7 +74,9 @@ export const router = createBrowserRouter([
         path: "owner/hotel",
         element: (
           <ProtectedRoute>
-            <OwnerHotelPage />
+            <ProtectedOwnerRoute>
+              <OwnerHotelPage />
+            </ProtectedOwnerRoute>
           </ProtectedRoute>
         ),
       },
@@ -79,7 +84,9 @@ export const router = createBrowserRouter([
         path: "owner/rooms",
         element: (
           <ProtectedRoute>
-            <OwnerRoomsPage />
+            <ProtectedOwnerRoute>
+              <OwnerRoomsPage />
+            </ProtectedOwnerRoute>
           </ProtectedRoute>
         ),
       },
@@ -87,7 +94,9 @@ export const router = createBrowserRouter([
         path: "owner/bookings",
         element: (
           <ProtectedRoute>
-            <OwnerBookingsPage />
+            <ProtectedOwnerRoute>
+              <OwnerBookingsPage />
+            </ProtectedOwnerRoute>
           </ProtectedRoute>
         ),
       },
