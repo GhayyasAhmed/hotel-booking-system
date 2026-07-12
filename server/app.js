@@ -29,19 +29,6 @@ app.get("/", (req,res) => {
     return res.send("Api is working")
 })
 
-app.get("/debug-env", (req, res) => {
-  res.json({
-    hasDb: !!process.env.DB_URI,
-    hasClerk: !!process.env.CLERK_SECRET_KEY,
-    hasStripe: !!process.env.STRIPE_SECRET_KEY,
-    nodeEnv: process.env.NODE_ENV,
-    dbState: mongoose.connection.readyState,
-    Db: process.env.DB_URI,
-    Clerk: process.env.CLERK_SECRET_KEY,
-    Stripe: process.env.STRIPE_SECRET_KEY
-  });
-});
-
 
 app.use("/api/user", userRouter);
 app.use("/api/hotel", hotelRouter);
