@@ -9,6 +9,7 @@ import roomRouter from "./routes/roomRoutes.js"
 import bookingRouter from "./routes/bookingRoutes.js"
 import reviewRouter from "./routes/reviewRoutes.js"
 import { stripeWebhooks } from "./controllers/stripeWebhooks.js"
+import mongoose from "mongoose"
 
 const app = express()
 
